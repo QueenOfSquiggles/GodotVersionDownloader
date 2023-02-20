@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://r22lny5wjgfd"]
+
+[ext_resource type="Texture2D" uid="uid://m1puvwcqblkl" path="res://icon.svg" id="1_jrqbi"]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_jrqbi")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Currently Loading"

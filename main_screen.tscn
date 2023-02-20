@@ -1,0 +1,126 @@
+[gd_scene load_steps=7 format=3 uid="uid://qhvqr7vs1rif"]
+
+[ext_resource type="Script" path="res://root_main.gd" id="1_6kuqf"]
+[ext_resource type="Script" path="res://main_screen.gd" id="1_66pce"]
+[ext_resource type="Script" path="res://SubVersionsPanel.gd" id="2_rou40"]
+[ext_resource type="Script" path="res://ActualDownloads.gd" id="3_7ldb3"]
+[ext_resource type="PackedScene" uid="uid://r22lny5wjgfd" path="res://loading_placeholder.tscn" id="5_escsc"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_6dhi5"]
+color = Color(1, 1, 1, 1)
+thickness = 5
+vertical = true
+
+[node name="RootMain" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6kuqf")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="LblVersion" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+theme_override_styles/separator = SubResource("StyleBoxLine_6dhi5")
+
+[node name="LblSub" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+script = ExtResource("1_66pce")
+loading_placeholder_scene = ExtResource("5_escsc")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="Control"]
+
+[node name="VersionsPanel" type="PanelContainer" parent="Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/VersionsPanel"]
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/VersionsPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VersionList" type="VBoxContainer" parent="Control/VersionsPanel/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="SubVersionsPanel" type="PanelContainer" parent="Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_rou40")
+loading_placeholder_scene = ExtResource("5_escsc")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="Control/SubVersionsPanel"]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/SubVersionsPanel"]
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/SubVersionsPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="SubVersionList" type="VBoxContainer" parent="Control/SubVersionsPanel/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActualDownloads" type="PanelContainer" parent="Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_7ldb3")
+loading_placeholder_scene = ExtResource("5_escsc")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/ActualDownloads"]
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/ActualDownloads/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="DownloadList" type="VBoxContainer" parent="Control/ActualDownloads/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="sub_version_selected" from="Control" to="." method="_on_control_sub_version_selected"]
+[connection signal="version_selected" from="Control" to="." method="_on_control_version_selected"]
+[connection signal="request_downloads" from="Control/SubVersionsPanel" to="Control" method="_on_sub_versions_panel_request_downloads"]
+[connection signal="request_download" from="Control/ActualDownloads" to="." method="_on_actual_downloads_request_download"]

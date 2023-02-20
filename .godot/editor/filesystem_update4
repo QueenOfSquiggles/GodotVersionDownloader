@@ -1,0 +1,6 @@
+res://main_screen.tscn
+res://main_screen.gd
+res://SubVersionsPanel.gd
+res://ActualDownloads.gd
+res://root_main.gd
+res://loading_placeholder.tscn
